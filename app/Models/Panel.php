@@ -14,8 +14,15 @@ class Panel extends Model
 
     protected $gurded = ['id'];
 
-    public function subdistrict(): BelongsTo
+    public function street(): BelongsTo
     {
-        return $this->belongsTo(SubdistrictLightingDetail::class, 'subdistrict_lighting_detail_id');
+        return $this->belongsTo(Street::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }

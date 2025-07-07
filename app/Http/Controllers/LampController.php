@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IconPin;
 use App\Models\Lamp;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LampController extends Controller
 {
@@ -12,7 +15,10 @@ class LampController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('sidebar/data_apj/APJ/pages', [
+            'lamps' => Lamp::with(['street.village.subdistrict', 'user', 'icon'])->latest()->get(),
+            'iconPin' => IconPin::get(),
+        ]);
     }
 
     /**
@@ -28,7 +34,21 @@ class LampController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'street_id' => 'required',
+            'icon_id' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'type' => 'required|string|in:LED,Konvensional,Tenaga Surya',
+        ]);
+
+        $validatedData['user_id'] = Auth::user()->id;
+
+        // dd($validatedData);
+
+        Lamp::create($validatedData);
+
+        return back();
     }
 
     /**

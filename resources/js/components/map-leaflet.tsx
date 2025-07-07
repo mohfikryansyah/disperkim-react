@@ -1,16 +1,7 @@
-import { MutableRefObject, PropsWithChildren, useEffect, useState } from "react";
-import {
-    MapContainer,
-    TileLayer,
-    GeoJSON,
-    Marker,
-    Tooltip,
-    useMapEvents,
-    Popup,
-    useMap,
-} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { Icon, PathOptions, StyleFunction } from "leaflet";
+import { Icon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { MutableRefObject, PropsWithChildren, useEffect } from 'react';
+import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 
 type Props = {
     className?: string;
@@ -34,18 +25,19 @@ export const MapWithInvalidateSize = () => {
     return null;
 };
 
-export const defaultMarkerIcon = new Icon({
-    iconUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowAnchor: [10, 41],
-    shadowSize: [41, 41],
-});
+export const defaultMarkerIcon = (iconUrl?: string) =>
+    new Icon({
+        iconUrl: iconUrl
+            ? `${window.location.origin}/storage/${iconUrl}`
+            : 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+        iconSize: [30, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowAnchor: [10, 41],
+        shadowSize: [41, 41],
+    });
 
-
-export default function     MapLeaflet({
+export default function MapLeaflet({
     zoom = 10,
     center = [0.5753543789632711, 123.27836689275536],
     children,
@@ -53,8 +45,8 @@ export default function     MapLeaflet({
     ...props
 }: Props & PropsWithChildren) {
     const maxBounds: [[number, number], [number, number]] = [
-        [0.4, 122.8], // Kiri Bawah (Latitude, Longitude)
-        [0.9, 123.7], // Kanan Atas (Latitude, Longitude)
+        [0.3, 122.8], // Kiri Bawah (Latitude, Longitude)
+        [0.8, 123.4], // Kanan Atas (Latitude, Longitude)
     ];
 
     function MapInitializer() {
@@ -65,33 +57,38 @@ export default function     MapLeaflet({
                 }
             },
         });
-        
+
         if (mapRef && !mapRef.current) {
             mapRef.current = map;
         }
-        
+
         return null;
     }
 
     return (
-            <MapContainer
-                center={center}
-                zoom={zoom}
-                zoomControl={false}
-                className="z-10 rounded-xl"
-                style={{ height: "100%", width: "100%" }}
-                ref={mapRef}
-                zoomSnap={0}
-                zoomDelta={0.25}
-                maxBounds={maxBounds}
-                maxBoundsViscosity={1.0}
-                minZoom={10.5}
-                {...props}
-            >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <MapWithInvalidateSize />
-                <MapInitializer />
-                {children}
-            </MapContainer>
+        <MapContainer
+            center={center}
+            zoom={zoom}
+            zoomControl={true}
+            className="z-10 rounded-xl"
+            style={{ height: '100%', width: '100%' }}
+            ref={mapRef}
+            zoomSnap={0}
+            zoomDelta={0.25}
+            maxBounds={maxBounds}
+            maxBoundsViscosity={1.0}
+            minZoom={10.5}
+            maxZoom={19.5}
+            {...props}
+        >
+            <TileLayer
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                attribution='&copy; <a href="https://www.esri.com/en-us/home">Esri</a> & contributors'
+                maxZoom={19.5}
+            />
+            <MapWithInvalidateSize />
+            <MapInitializer />
+            {children}
+        </MapContainer>
     );
 }

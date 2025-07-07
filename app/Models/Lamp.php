@@ -11,15 +11,20 @@ class Lamp extends Model
     /** @use HasFactory<\Database\Factories\LampFactory> */
     use HasFactory;
 
-    protected $gurded = ['id'];
+    protected $guarded = ['id'];
 
-    public function subdistrict(): BelongsTo
+    public function street(): BelongsTo
     {
-        return $this->belongsTo(SubdistrictLightingDetail::class, 'subdistrict_lighting_detail_id');
+        return $this->belongsTo(Street::class);
     }
 
-    public function panel(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Panel::class);
+        return $this->belongsTo(User::class);
+    }
+    
+    public function icon(): BelongsTo
+    {
+        return $this->belongsTo(IconPin::class, 'icon_id');
     }
 }

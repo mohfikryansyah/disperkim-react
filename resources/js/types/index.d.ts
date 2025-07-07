@@ -42,51 +42,96 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+  
+export interface Subdistrict {
+  id: number | string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  villages?: Village[];
+}
 
-export interface DistrictLightingStat {
-    id?: number;
-    district_name: string;
-    subdistrict: SubdistrictLightingStat[];
-    panel_count: number;
-    lamp_count: number;
-    cable_length: number;
-    created_at?: string;
-    updated_at?: string;
-    subdistrict_lighting_details?: SubdistrictLightingDetail[];
-  }
-  
-  export interface SubdistrictLightingDetail {
-    id?: number;
-    district_lighting_stat_id: number;
-    district: DistrictLightingStat;
-    subdistrict_name: string;
-    lamp_count: number;
-    cable_length: number;
-    created_at?: string;
-    updated_at?: string;
-    panels?: Panel[];
-    lamps?: Lamp[];
-  }
-  
-  export interface Panel {
-    id?: number;
-    subdistrict_lighting_detail_id: number;
-    subdistrict: SubdistrictLightingDetail;
-    name?: string | null;
-    latitude: number;
-    longitude: number;
-    status: 'Baik' | 'Rusak';
-    created_at?: string;
-    updated_at?: string;
-  }
-  
-  export interface Lamp {
-    id?: number;
-    subdistrict: SubdistrictLightingDetail;
-    latitude: number;
-    longitude: number;
-    type: 'LED' | 'PJUTS' | 'Konvensional';
-    created_at?: string;
-    updated_at?: string;
-  }
+export interface Village {
+  id: number | string;
+  subdistrict_id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  streets: Street[];
+  subdistrict: Subdistrict;
+}
+
+export interface Street {
+  id: number | string;
+  village_id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  village: Village;
+  panels?: Panel[];
+  lamps?: Lamp[];
+}
+
+export interface Panel {
+  id: number;
+  street_id: number;
+  user_id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  created_at: string;
+  updated_at: string;
+}
+
+
+export type LampType = 'LED' | 'Tenaga Surya' | 'Konvensional'
+
+export interface Lamp {
+  id: number;
+  icon: IconPin;
+  user: User;
+  street_id: number;
+  street: Street;
+  user_id: number;
+  latitude: number;
+  longitude: number;
+  type: LampType;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IconPin {
+  id: number;
+  path_icon: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RequiredItem extends Totals {
+  id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Totals {
+  user_id: number
+  street_length: number;
+  installed_panels_prabayar: number;
+  installed_panels_pascabayar: number;
+  required_panels: number;
+  installed_cable_length: number;
+  required_cable_length: number;
+  required_lamps: number;
+  installed_lamps_via_app: number;
+  installed_lamps_non_app: number;
+  installed_lamps_mandiri: number;
+}
+
+export interface IconPin {
+  id: number;
+  name: string;
+  path_icon: string;
+  created_at: string;
+  updated_at: string;
+}
   

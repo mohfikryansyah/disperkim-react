@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('panels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subdistrict_lighting_detail_id')->constrained('subdistrict_lighting_details')->onDelete('cascade');
-            $table->string('name')->nullable();
+            $table->foreignUuid('street_id')->constrained('streets')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('name');
+            $table->integer('power');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->enum('status', ['Baik', 'Rusak'])->default('Baik');
             $table->timestamps();
         });
     }

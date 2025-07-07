@@ -6,8 +6,10 @@ use App\Models\Lamp;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Panel;
+use App\Models\Subdistrict;
 use Illuminate\Database\Seeder;
 use App\Models\DistrictLightingStat;
+use App\Models\IconPin;
 use App\Models\SubdistrictLightingDetail;
 
 class DatabaseSeeder extends Seeder
@@ -24,45 +26,29 @@ class DatabaseSeeder extends Seeder
             'email' => 'moh.fikryansyah@gmail.com',
         ]);
 
-        DistrictLightingStat::factory(5)->create()->each(function ($district) {
-            $subdistricts = SubdistrictLightingDetail::factory(rand(2, 4))->create([
-                'district_lighting_stat_id' => $district->id,
-            ]);
-        
-            $totalPanelCount = 0;
-            $totalLampCount = 0;
-            $totalCableLength = 0;
-        
-            foreach ($subdistricts as $subdistrict) {
-                $lampCount = rand(5, 15);
-                $cableLength = rand(100, 500); // meter
-        
-                Lamp::factory($lampCount)->create([
-                    'subdistrict_lighting_detail_id' => $subdistrict->id,
-                ]);
-        
-                $panelCount = rand(1, 3); // <- simpan jumlah panel di sini
-                Panel::factory($panelCount)->create([
-                    'subdistrict_lighting_detail_id' => $subdistrict->id,
-                ]);
-        
-                // Update subdistrict
-                $subdistrict->update([
-                    'lamp_count' => $lampCount,
-                    'cable_length' => $cableLength,
-                ]);
-        
-                $totalPanelCount += $panelCount;
-                $totalLampCount += $lampCount;
-                $totalCableLength += $cableLength;
-            }
-        
-            $district->update([
-                'panel_count' => $totalPanelCount,
-                'lamp_count' => $totalLampCount,
-                'cable_length' => $totalCableLength,
-            ]);
-        });
+        Subdistrict::factory()->count(9)->create();
+
+        IconPin::factory()->create([
+            'name' => 'Contoh Gambar 1',
+            'path_icon' => 'pin/pin.png',
+        ]);
+        IconPin::factory()->create([
+            'name' => 'Contoh Gambar 2',
+            'path_icon' => 'pin/pin2.png',
+        ]);
+        IconPin::factory()->create([
+            'name' => 'Contoh Gambar 3',
+            'path_icon' => 'pin/pin3.png',
+        ]);
+        IconPin::factory()->create([
+            'name' => 'Contoh Gambar 4',
+            'path_icon' => 'pin/pin4.png',
+        ]);
+        IconPin::factory()->create([
+            'name' => 'Contoh Gambar 5',
+            'path_icon' => 'pin/pin5.png',
+        ]);
+
         
     }
 }

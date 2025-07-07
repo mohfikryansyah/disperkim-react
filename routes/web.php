@@ -1,13 +1,16 @@
 <?php
 
-use App\Models\DistrictLightingStat;
-use App\Models\Lamp;
 use Inertia\Inertia;
 use App\Models\Panel;
-use App\Models\SubdistrictLightingDetail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LampController;
+use App\Http\Controllers\StreetController;
+use App\Http\Controllers\VillageController;
+use App\Http\Controllers\SubdistrictController;
+use App\Http\Controllers\RequiredItemController;
+use App\Models\Lamp;
+use App\Models\Subdistrict;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -15,48 +18,37 @@ Route::get('/', function () {
 
 
 Route::get('/lokasi/panel', function () {
-    $panel = Panel::with('subdistrict.district', 'subdistrict.lamps')->get();
+    $panel = Panel::get();
     return Inertia::render('sidebar/lokasi_panel/index', compact('panel'));
 })->name('lokasi.panel');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    Route::prefix('data/apj')->group(function () {
-        Route::get('/', function () {
-            $lamps = Lamp::with('subdistrict.district')->get();
-            return Inertia::render('sidebar/data_apj/APJ/index', compact('lamps'));
-        })->name('data.apj');
-
-
-        Route::get('/konvensional', function () {
-            $lamps = Lamp::with('subdistrict.district')->where('type', 'Konvensional')->get();
-            return Inertia::render('sidebar/data_apj/konvensional/index', compact('lamps'));
-        })->name('data.apj.konvensional');
-
-        Route::get('/led', function () {
-            $lamps = Lamp::with('subdistrict.district')->where('type', 'LED')->get();
-            return Inertia::render('sidebar/data_apj/LED/index', compact('lamps'));
-        })->name('data.apj.led');
-
-        Route::get('/pjuts', function () {
-            $lamps = Lamp::with('subdistrict.district')->where('type', 'PJUTS')->get();
-            return Inertia::render('sidebar/data_apj/LED/index', compact('lamps'));
-        })->name('data.apj.pjuts');
-
-        Route::get('/kecamatan/{query}', function ($query) {
-            if ($query) {
-                $districts = DistrictLightingStat::with('subdistrict.lamps')->where('id', $query)->first();
-                $district = $districts->first()->name;
-            } else {
-                $districts = DistrictLightingStat::with('subdistrict.lamps')->get();
-            }
-            return Inertia::render('sidebar/data_apj/_query/query', compact('districts', 'district'));
-        })->name('data.apj.all');
+    Route::prefix('apj')->group(function () {
+        Route::resource('/', LampController::class)->parameters(['' => 'lamp'])->names('lamp');
     });
 
+    Route::prefix('lokasi')->group(function () {
+        Route::get('panel', function () {
+            $panels = Panel::get();
+            return Inertia::render('sidebar/lokasi_panel/index', compact('panels'));
+        })->name('lokasi.panel');
+        Route::get('lamp', function () {
+            $lamps = Lamp::with(['street.village.subdistrict', 'user', 'icon'])->get();
+            return Inertia::render('sidebar/lokasi_lamp/index', compact('lamps'));
+        })->name('lokasi.lamp');
+    });
+
+    Route::prefix('data-master')->group(function () {   
+        Route::resource('subdistricts', SubdistrictController::class);
+        Route::resource('villages', VillageController::class);
+        Route::resource('streets', StreetController::class);
+    });
+    Route::resource('monitoring-pju', RequiredItemController::class)->parameters(['monitoring-pju' => 'requiredItem']);
 
     Route::get('dashboard', function () {
-        return Inertia::render('sidebar/dashboard/index');
+        $totals = (new Subdistrict())->calculateTotalRequiredItems();
+        $totalsPerKecamatans = (new Subdistrict())->calculateRequiredLampsPerSubdistrict();
+        return Inertia::render('sidebar/dashboard/index', compact('totals', 'totalsPerKecamatans'));
     })->name('dashboard');
 });
 

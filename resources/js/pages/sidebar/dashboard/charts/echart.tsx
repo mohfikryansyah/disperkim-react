@@ -5,10 +5,13 @@ import { useCapitalizeEachWord } from '@/hooks/use-capitalize-each-word';
 import { useDistrict } from '@/hooks/use-fetch';
 import * as echarts from 'echarts';
 import { useEffect, useRef } from 'react';
+import { InstalledLampData } from '..';
 
 type EChartsOption = echarts.EChartsOption;
 
-export default function Echart() {
+
+
+export default function Echart({ totalsLampuPerKecamatan }: {totalsLampuPerKecamatan: { name: string; total: number }[]} ) {
     const chartRef = useRef<HTMLDivElement>(null);
 
     const { districts, loading } = useDistrict();
@@ -27,12 +30,12 @@ export default function Echart() {
     ];
 
     const chartData =
-        districts?.map((district, i) => {
-            const visitorValue = Number(district.id);
+        totalsLampuPerKecamatan?.map((total, i) => {
+            const lampValue = Number(total.total);
 
             return {
-                value: visitorValue,
-                name: capitalize(district.name),
+                value: lampValue,
+                name: capitalize(total.name),
             };
         }) ?? [];
 
