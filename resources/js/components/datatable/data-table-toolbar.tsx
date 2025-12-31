@@ -16,8 +16,8 @@ interface DataTableToolbarProps<TData> {
     columnFilter?: string;
     titleFilter?: string;
     optionsFilter?: {
-        label: string;
-        value: string;
+        label: string | number;
+        value: string | number;
         icon?: React.ComponentType<{ className?: string }>;
     }[];
 }
@@ -27,27 +27,31 @@ export function DataTableToolbar<TData>({ table, children, columnFilter, titleFi
     const isGlobalFiltered = table.getState().globalFilter !== '';
     return (
         <div className="flex items-center justify-between">
-            <div className="flex flex-1 items-center space-x-2">
+            <div className="flex flex-1 flex-col items-center not-xl:space-y-2 xl:flex-row xl:space-x-2">
                 {/* <Input
-                    placeholder="Sri Lutfianti"
+                    placeholder="Column search..."
                     value={(table.getColumn('nama')?.getFilterValue() as string) ?? ''}
                     onChange={(event) => table.getColumn('nama')?.setFilterValue(event.target.value)}
                     className="h-8 w-[150px] lg:w-[250px]"
                 /> */}
                 <Input
-                    placeholder="Filter tasks..."
+                    placeholder="Cari sesuatu..."
                     value={table.getState().globalFilter}
                     onChange={(event) => table.setGlobalFilter(event.target.value)}
-                    className="h-8 w-[150px] lg:w-[250px]"
+                    className="w-full bg-gray-50 xl:w-[250px]"
                 />
                 {columnFilter && optionsFilter && table.getColumn(columnFilter) && (
                     <DataTableFacetedFilter column={table.getColumn(columnFilter)} title={titleFilter} options={optionsFilter} />
                 )}
                 {isGlobalFiltered && (
-                    <Button variant="ghost" onClick={() => {
-                        table.resetColumnFilters();
-                        table.setGlobalFilter('');
-                    }} className="h-8 px-2 lg:px-3">
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            table.resetColumnFilters();
+                            table.setGlobalFilter('');
+                        }}
+                        className="w-full px-2 xl:w-fit xl:px-3"
+                    >
                         Reset
                         <X />
                     </Button>

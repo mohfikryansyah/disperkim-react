@@ -1,18 +1,26 @@
 import { DataTable } from '@/components/datatable/data-table';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { lampTypeCategories } from '@/helpers';
+import useBoolean from '@/hooks/use-boolean';
 import AppLayout from '@/layouts/app-layout';
-import { IconPin, Lamp, Street } from '@/types';
+import { BreadcrumbItem, Panel } from '@/types';
 import { Head } from '@inertiajs/react';
-import { columns } from './columns';
+import APJExport from './APJExport';
+import { apjColumns } from './columns';
+import { PagesAPJProps } from './components/interface-apj';
 import CreateAPJ from './create-apj';
 
-export interface PropsAPJ {
-    lamps: Lamp[];
-    streets: Street[];
-    iconPin: IconPin[];
-}
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Data APJ',
+        href: '/data-apj',
+    },
+];
 
-export default function IndexDataAPJ({ lamps, streets, iconPin }: PropsAPJ) {
+export default function IndexDataAPJ({ lamps, streets, subdistricts, panels }: PagesAPJProps) {
+    const exportPDFisProccessing = useBoolean(false);
+
     const lampsOptionsType = Array.from(new Set(lamps.map((lamp) => lamp.type)));
 
     const formatedLampsOptionsType = lampsOptionsType.map((type) => {
@@ -21,65 +29,99 @@ export default function IndexDataAPJ({ lamps, streets, iconPin }: PropsAPJ) {
             value: type,
         };
     });
-    
+
+    const lampCounts = Object.entries(lampTypeCategories).reduce(
+        (acc, [key, types]) => {
+            acc[key] = lamps.filter((lamp) => types.includes(lamp.type)).length;
+            return acc;
+        },
+        {} as Record<string, number>,
+    );
+
+    const CardLamp = [
+        {
+            title: 'Total Lampu',
+            description: 'Total keseluruhan titik lampu',
+            value: lamps.length,
+        },
+        {
+            title: 'Total Lampu Konvensional',
+            description: 'Total keseluruhan LPJU Konvensional',
+            value: lampCounts.konvensional,
+        },
+        {
+            title: 'Total Lampu LED',
+            description: 'Total keseluruhan LPJU LED',
+            value: lampCounts.led,
+        },
+        {
+            title: 'Total Lampu Tenaga Surya',
+            description: 'Total keseluruhan LPJU Tenaga Surya',
+            value: lampCounts.ts,
+        },
+    ];
+
+    const panelsMatchWithStreets = streets.flatMap((street) => street.panels).filter((panel): panel is Panel => panel !== undefined);
+
+    const columns = apjColumns(lamps, streets, panelsMatchWithStreets);
+
     return (
-        <AppLayout>
-            <Head title="Dashboard" />
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="Data LPJU" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <h1 className="text-2xl font-bold">Data APJ Konvensional</h1>
-                <div className="grid gap-4 md:grid-cols-4">
-                    <Card className="relative overflow-hidden">
-                        <CardHeader>
-                            <CardTitle>Total Titik Lampu</CardTitle>
-                            <CardDescription>Total keseluruhan titik lampu</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <h1 className="text-2xl font-bold">{lamps.length}</h1>
-                            {/* <div className="absolute -right-10 top-0">
-                                <img src="/images/lampu.png" alt="" className='w-[7rem] lg:w-[10rem] h-auto opacity-10'/>
-                            </div> */}
-                        </CardContent>
-                    </Card>
-                    <Card className="relative overflow-hidden">
-                        <CardHeader>
-                            <CardTitle>Total Titik Lampu Konvensional</CardTitle>
-                            <CardDescription>Total keseluruhan APJ Konvensional</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <h1 className="text-2xl font-bold">{lamps.filter((lamp) => lamp.type === 'Konvensional').length}</h1>
-                            {/* <div className="absolute -right-10 top-0">
-                                <img src="/images/lampu.png" alt="" className='w-[7rem] lg:w-[10rem] h-auto opacity-10'/>
-                            </div> */}
-                        </CardContent>
-                    </Card>
-                    <Card className="relative overflow-hidden">
-                        <CardHeader>
-                            <CardTitle>Total Titik Lampu LED</CardTitle>
-                            <CardDescription>Total keseluruhan APJ LED</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <h1 className="text-2xl font-bold">{lamps.filter((lamp) => lamp.type === 'LED').length}</h1>
-                            {/* <div className="absolute -right-10 top-0">
-                                <img src="/images/lampu.png" alt="" className='w-[7rem] lg:w-[10rem] h-auto opacity-10'/>
-                            </div> */}
-                        </CardContent>
-                    </Card>
-                    <Card className="relative overflow-hidden">
-                        <CardHeader>
-                            <CardTitle>Total Titik Lampu Tenaga Surya</CardTitle>
-                            <CardDescription>Total keseluruhan APJ Tenaga Surya</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <h1 className="text-2xl font-bold">{lamps.filter((lamp) => lamp.type === 'Tenaga Surya').length}</h1>
-                            {/* <div className="absolute -right-10 top-0">
-                                <img src="/images/lampu.png" alt="" className='w-[7rem] lg:w-[10rem] h-auto opacity-10'/>
-                            </div> */}
-                        </CardContent>
-                    </Card>
+                <h1 className="text-primary text-lg font-semibold md:text-xl lg:text-2xl">Data Lampu Penerangan Jalan Umum</h1>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {CardLamp.map((card, index) => (
+                        <Card key={index} className="bg-card-gradient text-white">
+                            <CardHeader>
+                                <CardTitle>{card.title}</CardTitle>
+                                <CardDescription className="text-gray-300">{card.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <h1 className="text-2xl font-bold">{card.value}</h1>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </div>
-                <DataTable columns={columns} data={lamps} columnFilter="type" titleFilter="Filter Tipe" optionsFilter={formatedLampsOptionsType}>
-                    <CreateAPJ streets={streets} lamps={lamps} iconPin={iconPin} />
-                </DataTable>
+                <div className="grid grid-cols-12">
+                    <div className="col-span-12">
+                        <Card className="bg-gray-100">
+                            <CardHeader>
+                                <CardTitle>Daftar Lampu Penerangan</CardTitle>
+                                <CardDescription>Berikut adalah data lampu penerangan yang tersedia.</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <DataTable
+                                    columns={columns}
+                                    data={lamps}
+                                    columnFilter="type"
+                                    titleFilter="Filter Tipe"
+                                    optionsFilter={formatedLampsOptionsType}
+                                >
+                                    <CreateAPJ streets={streets} lamps={lamps} panels={panelsMatchWithStreets} />
+                                    <APJExport
+                                        subdistricts={subdistricts}
+                                        panels={panels}
+                                        routeName="export.apj-pdf"
+                                        titleForButton="Export PDF"
+                                        buttonIcon="/images/pdf-icon.svg"
+                                        buttonClassName="w-full bg-gradient-to-r from-white to-red-400 xl:w-fit"
+                                        processingText="Membuat PDF..."
+                                    />
+                                    <APJExport
+                                        subdistricts={subdistricts}
+                                        panels={panels}
+                                        routeName="export.apj-excel"
+                                        titleForButton="Export Excel"
+                                        buttonIcon="/images/excel-icon.svg"
+                                        buttonClassName="w-full bg-gradient-to-r from-white to-green-400 xl:w-fit"
+                                        processingText="Membuat Excel..."
+                                    />
+                                </DataTable>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
             </div>
         </AppLayout>
     );

@@ -1,12 +1,10 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Bot, Cross, Folder, LayoutGrid, Lightbulb, MapPinned, SquareTerminal } from 'lucide-react';
+import { Cable, Folder, LayoutGrid, Lightbulb, MapPinned, Settings, User, Zap } from 'lucide-react';
 import AppLogo from './app-logo';
-import { NavSecondary } from './nav-secondary';
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,95 +13,93 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: "Data APJ",
-        href: "#",
+        title: 'Data APJ',
+        href: '#',
         icon: Lightbulb,
         isActive: true,
         items: [
-            // {
-            //     title: "Konvensional",
-            //     href: route('data.apj.konvensional'),
-            // },
-            // {
-            //     title: "LED",
-            //     href: route('data.apj.led'),
-            // },
-            // {
-            //     title: "PJUTS",
-            //     href: route('data.apj.pjuts'),
-            // },
             {
-                title: "APJ",
+                title: 'APJ',
                 href: route('lamp.index'),
             },
-            {
-                title: "Jumlah APJ Kota Gorontalo",
-                href: "#",
-            },
-            {
-                title: "Rekening APJ Kota Gorontalo",
-                href: "#",
-            },
+            // {
+            //     title: 'Rekening APJ Kota Gorontalo',
+            //     href: '/',
+            // },
         ],
     },
     {
-        title: "Data Panel",
-        href: "#",
-        icon: Bot,
+        title: 'Data Panel',
+        href: '#',
+        icon: Zap,
         items: [
             {
-                title: "Paska Bayar",
-                href: "#",
+                title: 'Panel Kota Gorontalo',
+                href: route('panel.index'),
             },
-            {
-                title: "Prabayar",
-                href: "#",
-            },
-            {
-                title: "Panel Kota Gorontalo",
-                href: "#",
-            },
+            // {
+            //     title: 'Rekening APJ Kota Gorontalo',
+            //     href: '#',
+            // },
         ],
     },
     {
-        title: 'Data Makam Kota Gorontalo',
-        href: '/makam',
-        icon: Cross,
+        title: 'Data Kabel Jaringan',
+        href: route('network-cable.index'),
+        icon: Cable,
     },
 ];
 
 const secondaryNavItems: NavItem[] = [
     {
-        title: 'Lokasi Panel Kota Gorontalo',
-        href: route('lokasi.panel'),
-        icon: MapPinned,
-    },
-    {
-        title: 'Lokasi Lampu Kota Gorontalo',
-        href: route('lokasi.lamp'),
+        title: 'Sebaran Penerangan',
+        href: route('sebaran-lokasi-infrastruktur'),
         icon: MapPinned,
     },
 ];
 
-const daerahNavItems: NavItem[] = [
+const userNavItems: NavItem[] = [
     {
-        title: 'Monitoring PJU',
-        href: route('monitoring-pju.index'),
-        icon: LayoutGrid,
+        title: 'Pengguna',
+        href: route('users.index'),
+        icon: User,
+    },
+    {
+        title: 'Pengaturan Akun',
+        href: route('profile.edit'),
+        icon: Settings,
     },
 ];
 
-const footerNavItems: NavItem[] = [
+const dataMasterItems: NavItem[] = [
     {
         title: 'Data Master',
-        href: route('subdistricts.index'),
+        href: '#',
         icon: Folder,
-    }
+        isActive: true,
+        items: [
+            {
+                title: 'Kecamatan',
+                href: route('subdistricts.index'),
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Kelurahan',
+                href: route('villages.index'),
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Jalan',
+                href: route('streets.index'),
+                icon: LayoutGrid,
+            },
+        ],
+    },
 ];
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="offcanvas" variant="floating">
+        <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -117,9 +113,10 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
-                <NavSecondary items={secondaryNavItems} sidebarLabel='Lokasi' />
-                <NavSecondary items={[...footerNavItems]} sidebarLabel='Master' />
+                <NavMain items={mainNavItems} label="Menu Utama" />
+                <NavMain items={secondaryNavItems} label="Lokasi" />
+                <NavMain items={[...dataMasterItems]} label="Master" />
+                <NavMain items={userNavItems} label="Manajemen Sistem" />
                 {/* <NavSecondary items={footerNavItems} className="mt-auto" /> */}
             </SidebarContent>
 

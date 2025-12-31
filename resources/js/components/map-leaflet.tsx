@@ -29,7 +29,7 @@ export const defaultMarkerIcon = (iconUrl?: string) =>
     new Icon({
         iconUrl: iconUrl
             ? `${window.location.origin}/storage/${iconUrl}`
-            : 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+            : `${window.location.origin}/storage/pin/default.png`,
         iconSize: [30, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],

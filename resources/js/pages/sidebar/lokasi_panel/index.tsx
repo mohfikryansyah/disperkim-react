@@ -8,16 +8,16 @@ import ReactDOMServer from 'react-dom/server';
 import MapPanel from './map-panel';
 
 interface PropsPanel {
-    panel: Panel[]
+    panels: Panel[]
 }
 
-export default function IndexLokasiPanel({ panel }: PropsPanel) {
+export default function IndexLokasiPanel({ panels }: PropsPanel) {
 
     return (
         <AppLayout>
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <h1 className='font-bold text-2xl'>Lokasi Panel Kota Gorontalo</h1>
-                <MapPanel panel={panel}></MapPanel>
+                <MapPanel panels={panels}></MapPanel>
             </div>
         </AppLayout>
     );

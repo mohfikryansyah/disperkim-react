@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('required_items', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignUuid('street_id')->unique()->constrained('streets')->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->unsignedInteger('street_length');
-            $table->unsignedInteger('installed_panels_prabayar');
-            $table->unsignedInteger('installed_panels_pascabayar');
+            $table->unsignedInteger('installed_panels_prabayar')->default(0);
+            $table->unsignedInteger('installed_panels_pascabayar')->default(0);
             $table->unsignedInteger('required_panels');
-            $table->unsignedInteger('installed_cable_length');
+            $table->unsignedInteger('installed_cable_length')->default(0);
             $table->unsignedInteger('required_cable_length');
             $table->unsignedInteger('required_lamps');
-            $table->unsignedInteger('installed_lamps_via_app');
-            $table->unsignedInteger('installed_lamps_non_app');
-            $table->unsignedInteger('installed_lamps_mandiri');
+            $table->unsignedInteger('installed_lamps_via_app')->default(0);
+            $table->unsignedInteger('installed_lamps_non_app')->default(0);
+            $table->unsignedInteger('installed_lamps_mandiri')->default(0);
             $table->timestamps();
         });
     }

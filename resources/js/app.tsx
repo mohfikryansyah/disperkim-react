@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import { Toaster } from 'react-hot-toast';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Disperkim';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -17,12 +17,13 @@ createInertiaApp({
         root.render(
             <>
                 <App {...props} />
-                <Toaster position="top-right" reverseOrder={false} gutter={8} />
+                <Toaster position="top-center" reverseOrder={false} gutter={8} />
             </>,
         );
     },
     progress: {
-        color: '#4B5563',
+        color: 'red',
+        showSpinner: true,
     },
 });
 

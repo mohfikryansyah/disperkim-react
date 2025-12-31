@@ -1,0 +1,1 @@
+import{r as e}from"./app-BY9VdmuI.js";const s=()=>({capitalize:e.useCallback(a=>a.toLowerCase().split(" ").filter(t=>t.trim()!=="").map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join(" "),[])});export{s as u};

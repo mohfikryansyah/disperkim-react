@@ -37,6 +37,7 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
+    profile_banner?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
@@ -44,7 +45,7 @@ export interface User {
 }
   
 export interface Subdistrict {
-  id: number | string;
+  id: string;
   name: string;
   created_at: string;
   updated_at: string;
@@ -52,8 +53,8 @@ export interface Subdistrict {
 }
 
 export interface Village {
-  id: number | string;
-  subdistrict_id: number;
+  id: string;
+  subdistrict_id: string;
   name: string;
   created_at: string;
   updated_at: string;
@@ -62,40 +63,66 @@ export interface Village {
 }
 
 export interface Street {
-  id: number | string;
-  village_id: number;
+  id: string;
+  village_id: string;
   name: string;
   created_at: string;
   updated_at: string;
   village: Village;
   panels?: Panel[];
   lamps?: Lamp[];
+  required_item: RequiredItem;
 }
 
 export interface Panel {
-  id: number;
-  street_id: number;
-  user_id: number;
+  id: string;
+  street_id: string;
+  street: Street;
+  user: User;
   name: string;
+  customer_name: string;
+  customer_id: string;
+  type_panel: PanelType;
   latitude: number;
+  power: number;
   longitude: number;
   created_at: string;
   updated_at: string;
 }
 
 
-export type LampType = 'LED' | 'Tenaga Surya' | 'Konvensional'
+export type PanelType = 'Prabayar' | 'Pasca Bayar' | 'Non APP'
+export type LampType =
+  | "Tiang PLN Tanpa PJU"
+  | "Tiang PLN / PJU Manual"
+  | "Tiang PLN PJU Sodium Jaringan"
+  | "Tiang PLN PJU LED Jaringan"
+  | "Tiang PJU Single Sodium Jaringan"
+  | "Tiang PJU Double Sodium Jaringan"
+  | "Tiang PJU Single LED Jaringan"
+  | "Tiang PJU Double LED Jaringan"
+  | "Tiang Flood Light Jaringan"
+  | "Tiang PJUTS";
+  
+export type ListrikPLN = 'APP' | 'Non APP' | 'Mandiri' | '-';
 
 export interface Lamp {
-  id: number;
-  icon: IconPin;
+  id: string;
   user: User;
-  street_id: number;
-  street: Street;
   user_id: number;
+  street_id: string;
+  street: Street;
+  panel: Panel | null;
+  panel_id: string | null;
+  user_id: number;
+  name: string;
   latitude: number;
   longitude: number;
   type: LampType;
+  listrik_pln: ListrikPLN;
+  status: StatusLampType;
+  sumber_dana: string | null;
+  tahun_pengadaan: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -108,7 +135,7 @@ export interface IconPin {
 }
 
 export interface RequiredItem extends Totals {
-  id: number;
+  id: number | string;
   created_at: string;
   updated_at: string;
 }
@@ -127,11 +154,25 @@ export interface Totals {
   installed_lamps_mandiri: number;
 }
 
-export interface IconPin {
-  id: number;
-  name: string;
-  path_icon: string;
-  created_at: string;
-  updated_at: string;
+export interface NetworkCable {
+    id: number | string;
+    user_id: number;
+    user: User;
+    street_id: number | string;
+    street: Street;
+    name: string | null;
+    polyline: Coordinates[];
+    length: number;
+    type_cable: TypeCable;
+    created_at: string;
+    updated_at: string;
 }
+
+export type TypeCable = 'Kabel Jaringan TC-2x10mm' | 'Kabel Jaringan TC-4x10mm' | 'Kabel Jaringan TC-4x25mm' | 'Kabel Jaringan NYY-3x4mm';
+
+export type Coordinates = {
+    lat: number;
+    lng: number;
+};
   
+export type StatusLampType = 'Menyala' | 'Mati' | 'Rusak' | '-';

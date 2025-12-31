@@ -50,11 +50,11 @@ export default function Password() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+            <Head title="Pengaturan Profil" />
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
+                    <HeadingSmall title="Perbarui kata sandi" description="Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap aman." />
 
                     <form onSubmit={updatePassword} className="space-y-6">
                         <div className="grid gap-2">

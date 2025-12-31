@@ -28,8 +28,8 @@ interface DataTableProps<TData, TValue> {
     columnFilter?: string;
     titleFilter?: string;
     optionsFilter?: {
-        label: string;
-        value: string;
+        label: string | number;
+        value: string | number;
         icon?: React.ComponentType<{ className?: string }>;
     }[];
 }
@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({ columns, data, columnFilter, titleFil
             <DataTableToolbar table={table} optionsFilter={optionsFilter} titleFilter={titleFilter} columnFilter={columnFilter}>
                 {children}
             </DataTableToolbar>
-            <div className="overflow-hidden rounded-md border">
+            <div className="overflow-hidden rounded-xl">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -89,7 +89,11 @@ export function DataTable<TData, TValue>({ columns, data, columnFilter, titleFil
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className='hover:bg-slate-100'>
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    className="hover:bg-yellow-50 dark:hover:bg-slate-800/50 odd:bg-white even:bg-slate-50"
+                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                                     ))}

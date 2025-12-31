@@ -2,19 +2,20 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCapitalizeEachWord } from '@/hooks/use-capitalize-each-word';
-import { useDistrict } from '@/hooks/use-fetch';
+import { cn } from '@/lib/utils';
 import * as echarts from 'echarts';
 import { useEffect, useRef } from 'react';
-import { InstalledLampData } from '..';
 
 type EChartsOption = echarts.EChartsOption;
 
+interface DonutChartProps {
+    totalsLampuPerKecamatan: { name: string; total: number }[];
+    className?: string
+}
 
-
-export default function Echart({ totalsLampuPerKecamatan }: {totalsLampuPerKecamatan: { name: string; total: number }[]} ) {
+export default function DonutChart({ totalsLampuPerKecamatan, className }: DonutChartProps ) {
     const chartRef = useRef<HTMLDivElement>(null);
 
-    const { districts, loading } = useDistrict();
     const { capitalize } = useCapitalizeEachWord();
 
     const colorPalette = [
@@ -41,7 +42,7 @@ export default function Echart({ totalsLampuPerKecamatan }: {totalsLampuPerKecam
 
     useEffect(() => {
         if (!chartRef.current) return;
-        if (!loading) {
+        // if (!loading) {
             const chartInstance = echarts.init(chartRef.current);
 
             const option: EChartsOption = {
@@ -89,17 +90,16 @@ export default function Echart({ totalsLampuPerKecamatan }: {totalsLampuPerKecam
             return () => {
                 chartInstance.dispose();
             };
-        }
-    }, [loading, chartData]);
+    }, [chartData]);
 
     return (
-        <Card className="gap-0">
+        <Card className="gap-0 hover:border-primary/30 w-full">
             <CardHeader>
                 <CardTitle className='text-center'>Jumlah Titik Lampu</CardTitle>
                 <CardDescription className='text-center'>Jumlah titik lampu di kecamatan</CardDescription>
             </CardHeader>
-            <CardContent className="h-[500px] py-0">
-                <div ref={chartRef} className="h-full w-full" />
+            <CardContent className="py-0">
+                <div ref={chartRef} className={cn("h-[310px] w-full", className)} />
             </CardContent>
         </Card>
     );

@@ -13,10 +13,10 @@ class SubdistrictController extends Controller
     public function index()
     {
         $subdistricts = Subdistrict::with(['villages', 'villages.streets.requiredItem'])->latest()->get();
-
-        $totals = (new Subdistrict())->calculateTotalRequiredItems();
         
-        return inertia('sidebar/data-master/kecamatan/pages', [
+        $totals = (new Subdistrict())->calculateTotalRequiredItems();
+
+        return inertia('sidebar/data_master/kecamatan/pages', [
             'subdistricts' => $subdistricts,
             'totals' => $totals,
         ]);
@@ -49,9 +49,36 @@ class SubdistrictController extends Controller
      */
     public function show(Subdistrict $subdistrict)
     {
-        $subdistrict = Subdistrict::with(['villages', 'villages.streets.requiredItem'])->findOrFail($subdistrict->id);
-        $subdistricts = Subdistrict::with(['villages.streets'])->get();
+        // Ambil query parameter
+        $villageId = request()->query('village_id');
+        $streetId = request()->query('street_id');
 
+        // Base query dengan eager load ringan
+        $query = Subdistrict::with([
+            'villages' => function ($q) use ($villageId, $streetId) {
+                if ($villageId) {
+                    $q->where('id', $villageId);
+                }
+
+                $q->with(['streets' => function ($s) use ($streetId) {
+                    if ($streetId) {
+                        $s->where('id', $streetId);
+                    }
+                    $s->with('requiredItem');
+                }]);
+            },
+        ])->findOrFail($subdistrict->id);
+
+        // Ambil list kelurahan dan jalan untuk popover
+        $allVillages = $subdistrict->loadMissing('villages.streets')->villages;
+
+        $villages = $query->villages;
+        $streets = collect();
+        if ($villageId) {
+            $streets = $villages->firstWhere('id', $villageId)?->streets ?? collect();
+        }
+
+        // Hitung total berdasarkan hasil filter
         $totals = collect([
             'street_length' => 0,
             'installed_panels_prabayar' => 0,
@@ -65,26 +92,28 @@ class SubdistrictController extends Controller
             'installed_lamps_mandiri' => 0,
         ]);
 
-        foreach ($subdistrict->villages as $village) {
+        foreach ($query->villages as $village) {
             foreach ($village->streets as $street) {
                 $item = $street->requiredItem;
-
                 if ($item) {
-                    $totals = $totals->map(function ($value, $key) use ($item) {
-                        return $value + $item->$key;
-                    });
+                    $totals = $totals->map(fn($val, $key) => $val + ($item->$key ?? 0));
                 }
             }
         }
 
-
-        return inertia('sidebar/data-master/kecamatan/show', [
-            'subdistrict' => $subdistrict,
-            'subdistricts' => $subdistricts,
-            'subdistrictName' => $subdistrict->name,
+        return inertia('sidebar/data_master/kecamatan/show', [
+            'allVillages' => $allVillages,
+            'subdistrict' => $query,
+            'villages' => $villages,
+            'streets' => $streets,
             'totals' => $totals,
+            'filters' => [
+                'village_id' => $villageId,
+                'street_id' => $streetId,
+            ],
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -1,53 +1,91 @@
-import L from 'leaflet';
-import { useEffect, useRef } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import MapLeaflet, { defaultMarkerIcon } from '@/components/map-leaflet';
-import { Panel } from '@/types';
+import { markerIcon } from '@/helpers';
+import { Coordinates, Panel } from '@/types';
+import L from 'leaflet';
+import { Maximize } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { Marker, Popup } from 'react-leaflet';
+import PopupPanel from '../lokasi/popup-panel';
 
 interface MapPanelProps {
-  panel: Panel[];
-  zoom?: number;
-  center?: [number, number];
+    panels: Panel[];
+    zoom?: number;
+    center?: [number, number];
+    children?: React.ReactNode;
+    mapRef: React.RefObject<L.Map | null>;
+    currentLocation?: Coordinates | null;
+    onCoordinatesChange: (coords: Coordinates) => void;
 }
 
-export default function MapPanel({ panel, zoom = 12, center = [0.556174, 123.058548] }: MapPanelProps) {
-  const mapRef = useRef<L.Map | null>(null);
+export default function MapPanel({
+    panels,
+    zoom = 12,
+    center = [0.556174, 123.058548],
+    mapRef,
+    children,
+    currentLocation,
+    onCoordinatesChange,
+}: MapPanelProps) {
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (!mapRef.current) return;
 
-  useEffect(() => {
-    if (!mapRef.current) return;
+            mapRef.current.eachLayer((layer) => {
+                if (layer instanceof L.Marker) {
+                    mapRef.current?.removeLayer(layer);
+                }
+            });
 
-    mapRef.current.eachLayer((layer) => {
-      if (layer instanceof L.Marker) {
-        mapRef.current?.removeLayer(layer);
-      }
-    });
+            if (panels && panels.length > 0) {
+                panels.forEach((marker) => {
+                    const lat = marker.latitude;
+                    const lng = marker.longitude;
+                    const LokasiPanel = L.latLng(lat, lng);
+                    let popupContent = ReactDOMServer.renderToString(<PopupPanel marker={marker} lat={lat} lng={lng} />);
 
-    panel.forEach((marker) => {
-      const lat = marker.latitude;
-      const lng = marker.longitude;
-      const LokasiPanel = L.latLng(lat, lng);
-      let popupContent = ReactDOMServer.renderToString(
-        <div className="flex flex-col">
-          <h1 className="text-lg font-bold">Kelurahan {marker.name}</h1>
-          <p>LatLng: {lat}, {lng}</p>
-          <a
-            href={`https://maps.google.com/maps?q=${lat},${lng}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex mt-2 items-center text-blue-400 hover:underline"
-          >
-            Lihat di Google Maps
-          </a>
+                    if (mapRef.current) {
+                        L.marker(LokasiPanel, { icon: markerIcon(marker.type_panel) })
+                            .addTo(mapRef.current)
+                            .bindPopup(popupContent)
+                            .bindTooltip(marker.name, {
+                                permanent: true,
+                                direction: 'top',
+                                offset: [8, -40],
+                            });
+                    }
+                });
+            }
+        }, 200);
+
+        return () => clearTimeout(timer);
+    }, [panels]);
+
+    const handleFullscreen = () => {
+        if (mapRef.current) {
+            const mapContainer = mapRef.current.getContainer();
+            if (!document.fullscreenElement) {
+                mapContainer.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    };
+
+    return (
+        <div className="relative h-full w-full">
+            <div className="absolute top-2 right-2 z-[11]">
+                <button
+                    onClick={handleFullscreen}
+                    className="flex items-center justify-center rounded-md bg-white p-2 shadow-sm hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+                    <Maximize />
+                </button>
+            </div>
+            <MapLeaflet mapRef={mapRef} zoom={zoom} center={center}>
+                {children}
+            </MapLeaflet>
         </div>
-      );
-
-      if (mapRef.current) {
-        L.marker(LokasiPanel, { icon: defaultMarkerIcon }).addTo(mapRef.current).bindPopup(popupContent);
-      }
-    });
-  }, [panel]);
-
-  return (
-    <MapLeaflet mapRef={mapRef} zoom={zoom} center={center} />
-  );
+    );
 }

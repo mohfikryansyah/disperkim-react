@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Subdistrict;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,29 @@ class VillageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id' => Str::uuid(),
+            'subdistrict_id' => Subdistrict::factory(),
+            'name' => $this->faker->unique()->citySuffix(),
         ];
+    }
+
+    public function kotaBarat(): static
+    {
+        return $this->state(function () {
+            return [
+                'subdistrict_id' => Subdistrict::where('name', 'Kota Barat')->first()->id
+                    ?? Subdistrict::factory()->state(['name' => 'Kota Barat']),
+            ];
+        });
+    }
+
+    public function dungingi(): static
+    {
+        return $this->state(function () {
+            return [
+                'subdistrict_id' => Subdistrict::where('name', 'Dungingi')->first()->id
+                    ?? Subdistrict::factory()->state(['name' => 'Dungingi']),
+            ];
+        });
     }
 }

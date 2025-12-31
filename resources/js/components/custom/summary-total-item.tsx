@@ -36,9 +36,9 @@ export default function SummaryTotalItem({ totals, className, initialState = fal
         <>
             <div className={cn("grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4", className)}>
                 {cards.slice(0, 4).map((card, i) => (
-                    <Card key={i} className="border-none">
+                    <Card key={i} className="bg-card-gradient text-white">
                         <CardHeader>
-                            <CardTitle className="font-medium text-[#57534e]">{card.title}</CardTitle>
+                            <CardTitle>{card.title}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <h1 className="text-3xl font-semibold">{card.content}</h1>
@@ -57,9 +57,9 @@ export default function SummaryTotalItem({ totals, className, initialState = fal
                         className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4"
                     >
                         {cards.slice(4).map((card, i) => (
-                            <Card key={i + 4} className="border-none">
+                            <Card key={i + 4} className="bg-card-gradient text-white">
                                 <CardHeader>
-                                    <CardTitle className="font-medium text-[#57534e]">{card.title}</CardTitle>
+                                    <CardTitle>{card.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <h1 className="text-3xl font-semibold">{card.content}</h1>

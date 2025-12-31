@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Lamp;
+use App\Models\Panel;
 use App\Models\Street;
 use App\Models\Village;
 use Inertia\Middleware;
@@ -55,9 +57,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => $request->cookie('sidebar_state') === 'true',
 
-            'subdistricts' => Subdistrict::get(),
-            'villages' => Village::with(['subdistrict'])->get(),
-            'streets' => Street::with(['village.subdistrict'])->get(),
+            'totalPanel' => Panel::count(),
+            'totalLamp' => Lamp::count(),
+            'totalSubdistrict' => Subdistrict::count(),
         ];
     }
 }

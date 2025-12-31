@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('villages', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('subdistrict_id')->constrained('subdistricts')->onDelete('cascade');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->timestamps();
+
+            $table->unique(['subdistrict_id', 'name']);
         });
     }
 

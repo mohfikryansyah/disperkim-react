@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { Lamp } from '@/types';
-import MapLamp from './map-lamp';
+import MapLamp from '../lokasi/map-persebaran-infrastruktur';
 import { useRef } from 'react';
 
 interface PropsLamp {

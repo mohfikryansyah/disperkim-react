@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subdistrict;
 use App\Models\Village;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class VillageController extends Controller
 {
@@ -40,9 +41,9 @@ class VillageController extends Controller
             }
         }
 
-        return inertia('sidebar/data-master/kelurahan/pages', [
+        return inertia('sidebar/data_master/kelurahan/pages', [
             'villages' => $villages,
-            'subdistricts' => Subdistrict::get(),
+            'subdistricts' => Subdistrict::latest()->get(),
             'totals' => $totals,
         ]);
     }
@@ -61,7 +62,14 @@ class VillageController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('villages')->where(function ($query) use ($request) {
+                    return $query->where('subdistrict_id', $request->subdistrict_id);
+                }),
+            ],
             'subdistrict_id' => 'required|exists:subdistricts,id',
         ]);
 
@@ -102,7 +110,7 @@ class VillageController extends Controller
         }
 
 
-        return inertia('sidebar/data-master/kelurahan/show', [
+        return inertia('sidebar/data_master/kelurahan/show', [
             'villages' => $villages,
             'villageName' => $village->name,
             'totals' => $totals,
@@ -124,7 +132,15 @@ class VillageController extends Controller
     public function update(Request $request, Village $village)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('villages')->where(
+                    fn($query) =>
+                    $query->where('subdistrict_id', $request->subdistrict_id)
+                )->ignore($village->id)
+            ],
             'subdistrict_id' => 'required|exists:subdistricts,id',
         ]);
 

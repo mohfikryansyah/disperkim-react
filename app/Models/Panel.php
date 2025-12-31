@@ -2,17 +2,30 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Panel extends Model
 {
     /** @use HasFactory<\Database\Factories\PanelFactory> */
-    use HasFactory;
+    use HasFactory, HasUuids;
 
-    protected $gurded = ['id'];
+    protected $guarded = ['id'];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $appends = ['tanggal_formatted'];
+    
+
+    protected function tanggalFormatted(): Attribute
+    {
+        return Attribute::get(fn () => Carbon::parse($this->tanggal)->translatedFormat('d F Y'));
+    }
 
     public function street(): BelongsTo
     {
@@ -24,5 +37,8 @@ class Panel extends Model
         return $this->belongsTo(User::class);
     }
 
-    
+    public function icon(): BelongsTo
+    {
+        return $this->belongsTo(IconPin::class, 'icon_id');
+    }
 }

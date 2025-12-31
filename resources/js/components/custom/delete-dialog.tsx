@@ -1,7 +1,7 @@
-import { Trash2, TriangleAlert } from 'lucide-react';
+import { LoaderCircle, Trash2, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '../ui/dialog';
 
 type DeleteDialogProps = {
     title: string;
@@ -16,9 +16,9 @@ export default function DeleteDialog({ title, description, onDelete, isProcessin
     return (
         <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
             <DialogTrigger asChild>
-                    <Button variant="ghost" size="sm" className="m-0 cursor-pointer hover:bg-red-100">
-                        <Trash2 className="h-4 w-4 text-red-500" />
-                    </Button>
+                <Button variant="ghost" size="sm" className="m-0 cursor-pointer hover:bg-red-100">
+                    <Trash2 className="h-4 w-4 text-red-500" />
+                </Button>
             </DialogTrigger>
             <DialogContent className="w-full sm:max-w-[425px]">
                 <div className="flex flex-col items-center justify-center">
@@ -40,6 +40,7 @@ export default function DeleteDialog({ title, description, onDelete, isProcessin
                             }}
                             aria-label="Delete row"
                         >
+                            {isProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                             Ya, saya yakin!
                         </Button>
                     </div>

@@ -6,10 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 
 import { useCapitalizeEachWord } from '@/hooks/use-capitalize-each-word';
-import { useDistrict } from '@/hooks/use-fetch';
 
 export function Piechart() {
-    const { districts, loading } = useDistrict();
     const { capitalize } = useCapitalizeEachWord();
 
     const colorPalette = [
@@ -22,37 +20,35 @@ export function Piechart() {
         'hsl(var(--chart-7))',
         'hsl(var(--chart-8))',
         'hsl(var(--chart-9))',
-      ];
-      
+    ];
 
-      const chartData =
-      districts?.map((district, i) => {
-        const visitorValue = Number(district.id);
-    
-        return {
-          browser: capitalize(district.name),
-          visitors: visitorValue,
-          fill: colorPalette[i % colorPalette.length], // pakai warna dari CSS variable
-        };
-      }) ?? [];
+    // const chartData =
+    //     districts?.map((district, i) => {
+    //         const visitorValue = Number(district.id);
 
-      console.log(chartData)
-    
+    //         return {
+    //             browser: capitalize(district.name),
+    //             visitors: visitorValue,
+    //             fill: colorPalette[i % colorPalette.length], // pakai warna dari CSS variable
+    //         };
+    //     }) ?? [];
 
-    const chartConfig: ChartConfig = {
-        visitors: {
-            label: 'Jumlah Lampu',
-        },
-        ...Object.fromEntries(
-            chartData.map((data) => [
-                capitalize(data.browser),
-                {
-                    label: capitalize(data.browser),
-                    color: data.fill,
-                },
-            ]),
-        ),
-    };
+    // console.log(chartData);
+
+    // const chartConfig: ChartConfig = {
+    //     visitors: {
+    //         label: 'Jumlah Lampu',
+    //     },
+    //     ...Object.fromEntries(
+    //         chartData.map((data) => [
+    //             capitalize(data.browser),
+    //             {
+    //                 label: capitalize(data.browser),
+    //                 color: data.fill,
+    //             },
+    //         ]),
+    //     ),
+    // };
 
     return (
         <Card className="flex flex-col">
@@ -60,16 +56,13 @@ export function Piechart() {
                 <CardTitle>Pie Chart - Jumlah Lampu per Kecamatan</CardTitle>
                 <CardDescription>Update wilayah 2024</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 pb-14 mt-20">
-                <ChartContainer config={chartConfig} className="mx-auto aspect-square md:max-h-[350px]">
+            <CardContent className="mt-20 flex-1 pb-14">
+                {/* <ChartContainer config={chartConfig} className="mx-auto aspect-square md:max-h-[350px]">
                     <PieChart>
                         <Pie data={chartData} dataKey="visitors" nameKey="browser" cx="50%" cy="50%" outerRadius={100} label />
-                        <ChartLegend
-                            content={<ChartLegendContent nameKey="browser" />}
-                            className="translate-y-14 flex-wrap  [&>*]:justify-start"
-                        />
+                        <ChartLegend content={<ChartLegendContent nameKey="browser" />} className="translate-y-14 flex-wrap [&>*]:justify-start" />
                     </PieChart>
-                </ChartContainer>
+                </ChartContainer> */}
             </CardContent>
         </Card>
     );

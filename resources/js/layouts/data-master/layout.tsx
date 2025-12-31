@@ -24,7 +24,7 @@ const sidebarNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Tambah Infrastruktur Jalan',
+        title: 'Infrastruktur Jalan',
         href: route('monitoring-pju.create'),
         icon: LayoutGrid,
     },

@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCapitalizeEachWord } from '@/hooks/use-capitalize-each-word';
-import { useDistrict } from '@/hooks/use-fetch';
+import { Subdistrict } from '@/types';
 import * as echarts from 'echarts';
 import { useEffect, useRef } from 'react';
 
@@ -48,10 +48,9 @@ const data: SubdistrictData[] = [
     },
 ];
 
-export default function StackedChart() {
+export default function StackedChart({ subdistricts }: { subdistricts: Subdistrict[] }) {
     const chartRef = useRef<HTMLDivElement>(null);
 
-    const { districts, loading } = useDistrict();
     const { capitalize } = useCapitalizeEachWord();
 
     const colorPalette = [
@@ -67,116 +66,121 @@ export default function StackedChart() {
     ];
 
     const chartData =
-        districts?.map((district, i) => {
-            const visitorValue = Number(district.id);
+        subdistricts?.map((subdistrict, i) => {
+            const visitorValue = Number(subdistrict.id);
 
             return {
                 value: visitorValue,
-                name: capitalize(district.name),
+                name: capitalize(subdistrict.name),
             };
         }) ?? [];
 
     useEffect(() => {
         if (!chartRef.current) return;
-        if (!loading) {
-            const chartInstance = echarts.init(chartRef.current);
+        const chartInstance = echarts.init(chartRef.current);
 
-            const option: EChartsOption = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow',
-                    },
+        const option: EChartsOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
                 },
-                legend: {
-                    bottom: 0,
-                    data: ['Kebutuhan Panel', 'Panel Terpasang', 'Kebutuhan Lampu', 'Lampu Terpasang', 'Kebutuhan Kabel (meter)', 'Kabel Terpasang (meter)'],
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '15%',
-                    containLabel: true,
-                },
-                xAxis: {
-                    type: 'category',
-                    data: data.map((d) => d.subdistrict),
-                },
-                yAxis: {
-                    type: 'value',
-                    name: 'Jumlah',
-                },
-                series: [
-                    {
-                        name: 'Kebutuhan Panel',
-                        type: 'bar',
-                        data: data.map((d) => d.required_panels),
-                        stack: 'panel',
-                        itemStyle: { color: '#fddd65' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
-                    {
-                        name: 'Panel Terpasang',
-                        type: 'bar',
-                        data: data.map((d) => d.installed_panels),
-                        stack: 'panel',
-                        itemStyle: { color: '#48b27e' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
-                    {
-                        name: 'Kebutuhan Lampu',
-                        type: 'bar',
-                        data: data.map((d) => d.required_lamps),
-                        stack: 'lamp',
-                        itemStyle: { color: '#83d1f2' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
-                    {
-                        name: 'Lampu Terpasang',
-                        type: 'bar',
-                        data: data.map((d) => d.installed_lamps),
-                        stack: 'lamp',
-                        itemStyle: { color: '#fa7170' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
-                    {
-                        name: 'Kebutuhan Kabel (meter)',
-                        type: 'bar',
-                        data: data.map((d) => d.required_cable),
-                        stack: 'cable',
-                        itemStyle: { color: '#a668c3' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
-                    {
-                        name: 'Kabel Terpasang (meter)',
-                        type: 'bar',
-                        data: data.map((d) => d.installed_cable),
-                        stack: 'cable',
-                        itemStyle: { color: '#607ad7' },
-                        emphasis: {
-                            focus: 'series',
-                        },
-                    },
+            },
+            legend: {
+                bottom: 0,
+                data: [
+                    'Kebutuhan Panel',
+                    'Panel Terpasang',
+                    'Kebutuhan Lampu',
+                    'Lampu Terpasang',
+                    'Kebutuhan Kabel (meter)',
+                    'Kabel Terpasang (meter)',
                 ],
-            };
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '15%',
+                containLabel: true,
+            },
+            xAxis: {
+                type: 'category',
+                data: data.map((d) => d.subdistrict),
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Jumlah',
+            },
+            series: [
+                {
+                    name: 'Kebutuhan Panel',
+                    type: 'bar',
+                    data: data.map((d) => d.required_panels),
+                    stack: 'panel',
+                    itemStyle: { color: '#fddd65' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+                {
+                    name: 'Panel Terpasang',
+                    type: 'bar',
+                    data: data.map((d) => d.installed_panels),
+                    stack: 'panel',
+                    itemStyle: { color: '#48b27e' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+                {
+                    name: 'Kebutuhan Lampu',
+                    type: 'bar',
+                    data: data.map((d) => d.required_lamps),
+                    stack: 'lamp',
+                    itemStyle: { color: '#83d1f2' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+                {
+                    name: 'Lampu Terpasang',
+                    type: 'bar',
+                    data: data.map((d) => d.installed_lamps),
+                    stack: 'lamp',
+                    itemStyle: { color: '#fa7170' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+                {
+                    name: 'Kebutuhan Kabel (meter)',
+                    type: 'bar',
+                    data: data.map((d) => d.required_cable),
+                    stack: 'cable',
+                    itemStyle: { color: '#a668c3' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+                {
+                    name: 'Kabel Terpasang (meter)',
+                    type: 'bar',
+                    data: data.map((d) => d.installed_cable),
+                    stack: 'cable',
+                    itemStyle: { color: '#607ad7' },
+                    emphasis: {
+                        focus: 'series',
+                    },
+                },
+            ],
+        };
 
-            chartInstance.setOption(option);
+        chartInstance.setOption(option);
 
-            return () => {
-                chartInstance.dispose();
-            };
-        }
-    }, [loading, chartData]);
+        return () => {
+            chartInstance.dispose();
+        };
+    }, [chartData]);
 
     return (
         <Card className="gap-0">

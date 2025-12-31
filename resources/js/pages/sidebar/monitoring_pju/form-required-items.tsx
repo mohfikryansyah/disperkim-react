@@ -22,7 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 type FormRequiredItemsProps = {
-    street_id: number | null;
+    street_id: number | string | null;
     created_by: number;
     street_length: string;
     installed_panels_prabayar: string;
@@ -119,7 +119,7 @@ export default function FormRequiredItems() {
                                                             <CommandItem
                                                                 key={street.id}
                                                                 onSelect={() => {
-                                                                    setData('street_id', street.id);
+                                                                    setData('street_id', String(street.id));
                                                                     isOpenPopover.setFalse();
                                                                 }}
                                                             >
