@@ -28,8 +28,6 @@ interface SebaranLokasiInfrastrukturProps {
 export default function SebaranLokasiInfrastruktur({ lamps, panels, networkCables, villages, subdistricts, filters, streets }: SebaranLokasiInfrastrukturProps) {
     const mapRef = useRef<L.Map | null>(null);
 
-    console.log(lamps)
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Sebaran Penerangan Kota Gorontalo" />

@@ -2,7 +2,7 @@
 
 import SummaryTotalItem from '@/components/custom/summary-total-item';
 import { DataTable } from '@/components/datatable/data-table';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Subdistrict, Totals } from '@/types';
 import { columns } from './columns';
@@ -31,7 +31,10 @@ export default function Kecamatan({ subdistricts, totals }: PagesProps) {
                 </div>
                 <div className="grid grid-cols-12">
                     <div className="col-span-12">
-                        <Card className="bg-gray-100">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Daftar Kecamatan</CardTitle>
+                            </CardHeader>
                             <CardContent>
                                 <DataTable columns={columns} data={subdistricts}>
                                     <CreateKecamatan />

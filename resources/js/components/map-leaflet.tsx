@@ -1,4 +1,4 @@
-import { Icon } from 'leaflet';
+import L, { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MutableRefObject, PropsWithChildren, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
@@ -67,6 +67,8 @@ export default function MapLeaflet({
 
     return (
         <MapContainer
+            renderer={L.canvas()}
+            preferCanvas={true}
             center={center}
             zoom={zoom}
             zoomControl={true}

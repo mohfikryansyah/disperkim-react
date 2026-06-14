@@ -1,118 +1,156 @@
-import { GridPattern } from '@/components/custom/grid-pattern';
-import { FlipWords } from '@/components/flip-words';
-import { BreadcrumbItem } from '@/types';
-import { MousePointerClick } from 'lucide-react';
+import { ArrowDown, Radio, Shield, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
+const quickStats = [
+    { value: '6', label: 'Kecamatan' },
+    { value: '24/7', label: 'Monitoring' },
+    { value: '128 km', label: 'Jaringan Kabel' },
 ];
 
 export default function HeroSection() {
-    const words = ['Terang', 'Aman', 'Efisien'];
+    const scrollToMap = () => {
+        document.getElementById('titik-lokasi-pju')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     return (
-        <section className="relative h-screen w-full overflow-hidden">
-            {/* <div className="not-md:hidden absolute -bottom-4 z-[100] h-[10rem] w-full bg-gradient-to-t from-white to-transparent"></div> */}
-            <div className="absolute inset-0 overflow-hidden [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
-                <GridPattern />
-            </div>
-            <div className="h-full w-full items-center justify-center md:px-4">
-                <div className="absolute z-10 flex h-full w-full flex-col items-center justify-center md:relative gap-8">
-                    {/* <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-10 text-center text-sm font-semibold tracking-widest text-emerald-700 uppercase not-md:px-12 md:mb-3"
-                    >
-                        Dinas Perumahan dan Kawasan Permukiman Kota Gorontalo
-                    </motion.p> */}
-                    <div className="flex h-9 items-center justify-center gap-1 rounded-xl bg-emerald-500/50 px-6 md:h-10 md:w-fit">
-                        <p className="text-[10px] font-semibold whitespace-nowrap md:text-base">
-                            Dinas Perumahan dan Kawasan Permukiman Kota Gorontalo
-                        </p>
-                    </div>
-                    <div className="text-center flex flex-col">
-                        <motion.h1
-                            initial={{ opacity: 0, scale: 0.9, y: 30, filter: 'blur(10px)' }}
-                            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-                            transition={{
-                                duration: 1,
-                                delay: 0.3,
-                                ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="to-primary inline-block bg-gradient-to-r from-blue-500 via-green-500 bg-clip-text text-center text-2xl font-bold text-balance text-transparent md:py-2 md:text-5xl"
-                        >
-                            Sistem Monitoring Infrastruktur Jalan
-                        </motion.h1>
-                        <motion.h1
-                            initial={{ opacity: 0, scale: 0.9, y: 30, filter: 'blur(10px)' }}
-                            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-                            transition={{
-                                duration: 1,
-                                delay: 0.3,
-                                ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="inline-block px-5 py-2 not-md:max-w-xs mx-auto text-center text-2xl leading-[1] font-bold text-balance text-gray-800 md:px-0 md:py-0 md:text-[3rem] lg:text-5xl"
-                        >
-                            Untuk Kota yang Lebih <FlipWords words={words} />
-                        </motion.h1>
-                    </div>
-                    <motion.p
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.8,
-                            delay: 1,
-                            ease: [0, 0.71, 0.2, 1.01],
-                        }}
-                        className="mx-auto max-w-[19rem] text-center text-sm font-medium text-gray-700 md:w-2/3 md:max-w-xl md:text-lg"
-                    >
-                        Pantau kondisi panel dan lampu jalan secara real-time untuk mendukung tata kelola kota yang cerdas.
-                    </motion.p>
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.8,
-                            delay: 1,
-                            ease: [0, 0.71, 0.2, 1.01],
-                        }}
-                        className="relative flex flex-col items-center justify-center space-y-3 md:mt-3"
-                    >
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                            <button
-                                className="bg-card-gradient rounded-full px-6 py-3 font-semibold text-white shadow-md transition hover:bg-gray-100"
-                                onClick={() => {
-                                    document.getElementById('titik-lokasi-pju')?.scrollIntoView({
-                                        behavior: 'smooth',
-                                        block: 'start',
-                                    });
-                                }}
-                            >
-                                Lihat Peta Infrastruktur
-                            </button>
-                        </motion.div>
+        <section className="bg-background relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden transition-colors duration-200">
+            {/* Dot grid background */}
+            <div
+                className="absolute inset-0 transition-colors duration-200"
+                style={{
+                    backgroundImage: 'radial-gradient(rgba(34,211,181,0.18) 1px, transparent 1px)',
+                    backgroundSize: '28px 28px',
+                    maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
+                }}
+            />
 
-                        <motion.div
-                            animate={{
-                                y: [0, 4, 0],
-                            }}
-                            transition={{
-                                repeat: Infinity,
-                                duration: 1.2,
-                                ease: 'easeInOut',
-                            }}
-                            className="absolute -right-3 bottom-1"
-                        >
-                            <MousePointerClick className="size-8 text-yellow-400" />
-                        </motion.div>
-                    </motion.div>
-                </div>
+            {/* Radial glow */}
+            <div className="pointer-events-none absolute inset-0 transition-colors duration-200">
+                <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20"
+                    style={{
+                        width: '600px',
+                        height: '600px',
+                        background: 'radial-gradient(circle, #0F7B6C 0%, transparent 70%)',
+                    }}
+                />
             </div>
+
+            {/* Pulse rings — signature element */}
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {[1, 2, 3].map((i) => (
+                    <motion.div
+                        key={i}
+                        className="border-accent/20 absolute rounded-full border"
+                        style={{
+                            width: `${i * 180}px`,
+                            height: `${i * 180}px`,
+                            top: `${-i * 90}px`,
+                            left: `${-i * 90}px`,
+                        }}
+                        animate={{ scale: [1, 1.06, 1], opacity: [0.2, 0.4, 0.2] }}
+                        transition={{ duration: 3 + i, repeat: Infinity, ease: 'easeInOut', delay: i * 0.6 }}
+                    />
+                ))}
+                {/* Center dot */}
+                <motion.div
+                    className="bg-primary relative z-10 flex h-12 w-12 -translate-x-6 -translate-y-6 items-center justify-center rounded-full shadow-[0_0_32px_rgba(34,211,181,0.6)]"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                    <Radio className="text-foreground h-5 w-5" />
+                </motion.div>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 flex flex-col items-center px-6 text-center">
+                {/* Eyebrow badge */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="border-accent/25 bg-accent/10 mb-8 flex items-center gap-2 rounded-full border px-4 py-2"
+                >
+                    <span className="bg-accent h-1.5 w-1.5 animate-pulse rounded-full" />
+                    <span className="text-accent text-xs font-semibold tracking-widest uppercase">
+                        Sistem Aktif · Dinas Perumahan & Kawasan Permukiman
+                    </span>
+                </motion.div>
+
+                {/* Headline */}
+                <motion.h1
+                    initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-foreground max-w-4xl text-4xl leading-[1.1] font-bold tracking-tight md:text-6xl lg:text-7xl"
+                >
+                    Monitor Infrastruktur{' '}
+                    <span
+                        className="inline-block bg-clip-text text-transparent"
+                        style={{ backgroundImage: 'linear-gradient(90deg, #22D3B5, #0F7B6C)' }}
+                    >
+                        PJU Kota Gorontalo
+                    </span>
+                </motion.h1>
+
+                {/* Sub */}
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed font-normal md:text-lg"
+                >
+                    Pantau kondisi panel dan lampu jalan secara real-time untuk mendukung tata kelola kota yang lebih cerdas, aman, dan efisien.
+                </motion.p>
+
+                {/* Quick stats row */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                    className="mt-10 flex flex-wrap justify-center gap-8"
+                >
+                    {quickStats.map((s, i) => (
+                        <div key={i} className="flex flex-col items-center gap-1">
+                            <span className="text-foreground text-2xl font-bold md:text-3xl">{s.value}</span>
+                            <span className="text-xs font-medium tracking-wide text-[#5D7FA3] uppercase">{s.label}</span>
+                        </div>
+                    ))}
+                </motion.div>
+
+                {/* CTAs */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.7, delay: 0.9 }}
+                    className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
+                >
+                    <button
+                        onClick={scrollToMap}
+                        className="bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold shadow-[0_0_24px_rgba(15,123,108,0.5)] transition-all hover:shadow-[0_0_32px_rgba(34,211,181,0.5)] active:scale-95"
+                    >
+                        <Zap className="h-4 w-4" />
+                        Lihat Peta Infrastruktur
+                    </button>
+                    <a
+                        href="#statistik"
+                        className="text-muted-foreground hover:text-foreground flex items-center gap-2 rounded-xl border border-white/10 px-7 py-3.5 text-sm font-semibold transition-all hover:border-white/20 active:scale-95"
+                    >
+                        <Shield className="h-4 w-4" />
+                        Lihat Statistik
+                    </a>
+                </motion.div>
+            </div>
+
+            {/* Scroll cue */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            >
+                <ArrowDown className="h-5 w-5 text-[#5D7FA3]" />
+            </motion.div>
         </section>
     );
 }

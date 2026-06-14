@@ -19,7 +19,6 @@ interface CardProps {
 export default function SummaryTotalItem({ totals, className, initialState = false }: SummaryTotalItemProps) {
     const [showAll, setShowAll] = useState(initialState);
 
-    
     const cards: CardProps[] = [
         { title: 'Panel Terpasang (Prabayar)', content: totals.installed_panels_prabayar },
         { title: 'Panel Terpasang (Pascabayar)', content: totals.installed_panels_pascabayar },
@@ -34,14 +33,24 @@ export default function SummaryTotalItem({ totals, className, initialState = fal
 
     return (
         <>
-            <div className={cn("grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4", className)}>
+            <div className={cn('grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4', className)}>
                 {cards.slice(0, 4).map((card, i) => (
-                    <Card key={i} className="bg-card-gradient text-white">
-                        <CardHeader>
-                            <CardTitle>{card.title}</CardTitle>
+                    <Card
+                        key={i}
+                        className="group border-border bg-card hover:border-accent/50 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                    >
+                        <div className="bg-accent absolute top-0 left-0 h-1 w-full" />
+
+                        <div className="bg-accent/10 group-hover:bg-accent/20 absolute -top-8 -right-8 h-24 w-24 rounded-full blur-3xl transition-all duration-300" />
+
+                        <CardHeader className="relative z-10">
+                            <CardTitle className="text-foreground">{card.title}</CardTitle>
                         </CardHeader>
-                        <CardContent>
-                            <h1 className="text-3xl font-semibold">{card.content}</h1>
+
+                        <CardContent className="relative z-10">
+                            <div className="flex items-end justify-between">
+                                <h1 className="text-primary text-3xl font-bold">{card.content}</h1>
+                            </div>
                         </CardContent>
                     </Card>
                 ))}
@@ -57,12 +66,22 @@ export default function SummaryTotalItem({ totals, className, initialState = fal
                         className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4"
                     >
                         {cards.slice(4).map((card, i) => (
-                            <Card key={i + 4} className="bg-card-gradient text-white">
-                                <CardHeader>
-                                    <CardTitle>{card.title}</CardTitle>
+                            <Card
+                                key={i}
+                                className="group border-border bg-card hover:border-accent/50 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                            >
+                                <div className="bg-accent absolute top-0 left-0 h-1 w-full" />
+
+                                <div className="bg-accent/10 group-hover:bg-accent/20 absolute -top-8 -right-8 h-24 w-24 rounded-full blur-3xl transition-all duration-300" />
+
+                                <CardHeader className="relative z-10">
+                                    <CardTitle className="text-foreground">{card.title}</CardTitle>
                                 </CardHeader>
-                                <CardContent>
-                                    <h1 className="text-3xl font-semibold">{card.content}</h1>
+
+                                <CardContent className="relative z-10">
+                                    <div className="flex items-end justify-between">
+                                        <h1 className="text-primary text-3xl font-bold">{card.content}</h1>
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}

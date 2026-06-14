@@ -16,14 +16,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Users({ users }: PAGEUserProps) {
-    console.log(users);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Daftar Pengguna" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="grid grid-cols-12">
                     <div className="col-span-12">
-                        <Card className="bg-gray-100">
+                        <Card>
                             <CardHeader>
                                 <CardTitle>Daftar Pengguna</CardTitle>
                                 <CardDescription>Berikut adalah data pengguna yang telah terdaftar di sistem.</CardDescription>

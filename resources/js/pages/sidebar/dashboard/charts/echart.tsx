@@ -46,6 +46,10 @@ export default function DonutChart({ totalsLampuPerKecamatan, className }: Donut
             const chartInstance = echarts.init(chartRef.current);
 
             const option: EChartsOption = {
+                title: {
+                    text: 'Jumlah Titik Lampu',
+                    left: 'center',
+                },
                 tooltip: {
                     trigger: 'item',
                 },
@@ -54,8 +58,18 @@ export default function DonutChart({ totalsLampuPerKecamatan, className }: Donut
                     left: 'center',
                     align: 'auto',
                 },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {
+                            pixelRatio: 2,
+                            title: 'Simpan sebagai gambar',
+                        },
+                        dataView: {},
+                    },
+                },
                 series: [
                     {
+                        top: 20,
                         name: 'Jumlah Titik Lampu',
                         type: 'pie',
                         radius: ['40%', '70%'],
@@ -94,10 +108,10 @@ export default function DonutChart({ totalsLampuPerKecamatan, className }: Donut
 
     return (
         <Card className="gap-0 hover:border-primary/30 w-full">
-            <CardHeader>
+            {/* <CardHeader>
                 <CardTitle className='text-center'>Jumlah Titik Lampu</CardTitle>
                 <CardDescription className='text-center'>Jumlah titik lampu di kecamatan</CardDescription>
-            </CardHeader>
+            </CardHeader> */}
             <CardContent className="py-0">
                 <div ref={chartRef} className={cn("h-[310px] w-full", className)} />
             </CardContent>

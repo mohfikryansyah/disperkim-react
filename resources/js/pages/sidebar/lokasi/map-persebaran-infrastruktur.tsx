@@ -190,7 +190,7 @@ export default function MapPersebaranInfrastruktur({
                         })
                             .addTo(mapRef.current)
                             .bindTooltip(marker.name, {
-                                permanent: true,
+                                sticky: true,
                                 direction: 'top',
                                 offset: [0, type === 'lamp' ? -37 : -36],
                             });
@@ -279,7 +279,7 @@ export default function MapPersebaranInfrastruktur({
         <div className="relative flex h-full w-full flex-1 flex-col">
             <div className="flex h-full flex-col space-y-4">
                 {showFilters ? (
-                    <div className="grid grid-cols-12 gap-x-3 rounded-lg bg-gray-100 px-3 py-3">
+                    <div className="grid grid-cols-12 gap-x-3 rounded-lg px-3 py-3">
                         <div
                             className={cn(
                                 'grid h-fit w-full items-center gap-4',

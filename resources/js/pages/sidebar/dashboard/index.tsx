@@ -116,13 +116,26 @@ export default function Index({
                     <div className="grid gap-5 lg:grid-cols-2">
                         <div className="col-span-2 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
                             {DashboardCard.map((card, index) => (
-                                <Card key={index} className="bg-card-gradient text-white">
-                                    <CardHeader>
-                                        <CardTitle>{card.title}</CardTitle>
-                                        <CardDescription className="text-gray-300">{card.description}</CardDescription>
+                                <Card
+                                    key={index}
+                                    className="group border-border bg-card hover:border-accent/50 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                >
+                                    {/* Accent Line */}
+                                    <div className="bg-accent absolute top-0 left-0 h-1 w-full" />
+
+                                    {/* Glow */}
+                                    <div className="bg-accent/10 group-hover:bg-accent/20 absolute -top-8 -right-8 h-24 w-24 rounded-full blur-3xl transition-all duration-300" />
+
+                                    <CardHeader className="relative z-10">
+                                        <CardTitle className="text-foreground">{card.title}</CardTitle>
+
+                                        <CardDescription>{card.description}</CardDescription>
                                     </CardHeader>
-                                    <CardContent>
-                                        <h1 className="text-2xl font-bold">{card.value}</h1>
+
+                                    <CardContent className="relative z-10">
+                                        <div className="flex items-end justify-between">
+                                            <h1 className="text-primary text-3xl font-bold">{card.value}</h1>
+                                        </div>
                                     </CardContent>
                                 </Card>
                             ))}
@@ -164,7 +177,7 @@ export default function Index({
 
                     <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
                         <div className="lg:col-span-6">
-                            <Card className="bg-gray-100">
+                            <Card>
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <CardTitle>Akses Cepat - Data Lampu Penerangan Jalan Umum</CardTitle>
@@ -206,7 +219,7 @@ export default function Index({
                             </Card>
                         </div>
                         <div className="lg:col-span-6">
-                            <Card className="bg-gray-100">
+                            <Card>
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <CardTitle>Akses Cepat - Data Panel</CardTitle>

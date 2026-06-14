@@ -37,8 +37,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     });
 
     const inputProfileBanner = useRef<HTMLInputElement>(null);
-    const inputAvatar = useRef<HTMLInputElement>(null);
     const [previewProfileBanner, setPreviewProfileBanner] = useState<string>('');
+    
+    const inputAvatar = useRef<HTMLInputElement>(null);
     const [previewAvatar, setPreviewAvatar] = useState<string>('');
 
     const submit: FormEventHandler = (e) => {
@@ -99,7 +100,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                     />
                                 ) : (
                                     <div
-                                        className="absolute -bottom-16 left-6 z-30 flex h-28 w-28 items-center justify-center rounded-full bg-gray-400 text-3xl font-bold text-white ring-4 ring-white"
+                                        className="absolute -bottom-16 left-6 z-30 flex h-28 w-28 items-center justify-center rounded-full bg-gray-400 text-3xl font-bold text-foreground ring-4 ring-white"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             inputAvatar.current?.click();

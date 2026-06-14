@@ -59,44 +59,44 @@ export default function TabelRingkasanKecamatan({ subdistricts }: PropsTableKeca
     );
 
     return (
-        <div className="overflow-hidden rounded-xl border border-gray-200 shadow-md">
+        <div className="overflow-hidden rounded-xl border shadow-md">
             <Table className="w-full">
                 <TableHeader className="sticky top-0 z-10">
                     <TableRow className="bg-primary/90 hover:bg-primary">
-                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             No.
                         </TableHead>
-                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             Nama Kecamatan
                         </TableHead>
-                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead rowSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             Panjang Jalan
                         </TableHead>
 
-                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             Lampu Penerangan (Unit)
                         </TableHead>
-                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             Panjang Kabel Jaringan LPJU (Meter)
                         </TableHead>
-                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-white">
+                        <TableHead colSpan={3} className="px-3 py-2 text-center font-semibold text-primary-foreground">
                             KWH Meter
                         </TableHead>
                     </TableRow>
 
                     <TableRow className="bg-primary/80 hover:bg-primary">
                         {['Yang Dibutuhkan', 'Terpasang', 'Belum Terpasang'].map((h) => (
-                            <TableHead key={h} className="px-3 py-2 text-center text-white">
+                            <TableHead key={h} className="px-3 py-2 text-center text-primary-foreground">
                                 {h}
                             </TableHead>
                         ))}
                         {['Yang Dibutuhkan', 'Terpasang', 'Belum Terpasang'].map((h) => (
-                            <TableHead key={h} className="px-3 py-2 text-center text-white">
+                            <TableHead key={h} className="px-3 py-2 text-center text-primary-foreground">
                                 {h}
                             </TableHead>
                         ))}
                         {['Yang Dibutuhkan', 'Terpasang', 'Belum Terpasang'].map((h) => (
-                            <TableHead key={h} className="px-3 py-2 text-center text-white">
+                            <TableHead key={h} className="px-3 py-2 text-center text-primary-foreground">
                                 {h}
                             </TableHead>
                         ))}
@@ -104,7 +104,7 @@ export default function TabelRingkasanKecamatan({ subdistricts }: PropsTableKeca
                 </TableHeader>
 
                 <TableBody className="text-sm">
-                    <TableRow className="bg-gray-100/50">
+                    <TableRow className="bg-background">
                         {[...Array(12)].map((_, i) => (
                             <TableCell key={i} className="border-b px-3 py-2 text-center text-gray-500">
                                 {i + 1}
@@ -112,14 +112,14 @@ export default function TabelRingkasanKecamatan({ subdistricts }: PropsTableKeca
                         ))}
                     </TableRow>
                     <TableRow>
-                        <TableCell colSpan={12} className="bg-gray-50 py-2.5 text-center text-sm">
+                        <TableCell colSpan={12} className="py-2.5 text-center text-sm bg-background/10">
                             <span className="text-gray-500 italic">Data Kecamatan</span>
                         </TableCell>
                     </TableRow>
 
                     {subdistricts.map((v, i) => (
                         <React.Fragment key={i}>
-                            <TableRow className="hover:bg-primary/5 transition-colors even:bg-gray-50">
+                            <TableRow className="hover:bg-primary/5 transition-colors even:bg-gray-50 even:dark:bg-background">
                                 <TableCell className="px-3 py-3 text-center font-semibold">{i + 1}</TableCell>
                                 <TableCell className="px-3 py-3 font-medium">{v.name}</TableCell>
                                 <TableCell className="px-3 py-3 text-center">{countStreetLength(v)}</TableCell>
@@ -146,7 +146,7 @@ export default function TabelRingkasanKecamatan({ subdistricts }: PropsTableKeca
                     ))}
 
                     <TableRow>
-                        <TableCell colSpan={12} className="bg-gray-50 py-4"></TableCell>
+                        <TableCell colSpan={12} className="bg-background/10 py-4"></TableCell>
                     </TableRow>
 
                     {/* TOTAL */}

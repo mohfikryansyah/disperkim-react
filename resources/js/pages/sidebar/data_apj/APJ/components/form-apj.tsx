@@ -374,7 +374,7 @@ export default function APJForm({ data, setData, errors, streets, lamps, panels 
                         Gunakan Lokasi saat ini
                     </button>
                 </div>
-                {/* <MapPersebaranInfrastruktur
+                <MapPersebaranInfrastruktur
                     showLegenda={false}
                     panels={[]}
                     lamps={matchLampsWithStreetID}
@@ -395,30 +395,18 @@ export default function APJForm({ data, setData, errors, streets, lamps, panels 
                             </Popup>
                         </Marker>
                     )}
-                </MapPersebaranInfrastruktur> */}
+                </MapPersebaranInfrastruktur>
             </div>
 
             <div className="grid w-full gap-2">
                 <Label>Latitude</Label>
-                <Input
-                    className="bg-white"
-                    type="number"
-                    name="latitude"
-                    value={data.latitude}
-                    onChange={(e) => setData('latitude', Number(e.target.value))}
-                />
+                <Input type="number" name="latitude" value={data.latitude} onChange={(e) => setData('latitude', Number(e.target.value))} />
                 <InputError message={errors.latitude} />
             </div>
 
             <div className="grid w-full gap-2">
                 <Label>Longitude</Label>
-                <Input
-                    className="bg-white"
-                    type="number"
-                    name="longitude"
-                    value={data.longitude}
-                    onChange={(e) => setData('longitude', Number(e.target.value))}
-                />
+                <Input type="number" name="longitude" value={data.longitude} onChange={(e) => setData('longitude', Number(e.target.value))} />
                 <InputError message={errors.longitude} />
             </div>
         </div>

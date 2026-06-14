@@ -169,7 +169,7 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                             <div className="mt-auto flex items-center gap-2">
                                 <Button
                                     type="submit"
-                                    className="bg-primary rounded-lg text-white shadow-sm transition-all duration-200 hover:bg-[#146c6d]"
+                                    className="bg-primary rounded-lg text-foreground shadow-sm transition-all duration-200 hover:bg-[#146c6d]"
                                 >
                                     <Filter className="mr-2 size-4" />
                                     Terapkan
@@ -216,23 +216,23 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                         </CardHeader>
                         <CardContent>
                             <Table className="w-full">
-                                <TableHeader className="bg-primary text-white">
+                                <TableHeader className="bg-primary text-foreground">
                                     <TableRow>
                                         <TableHead
                                             rowSpan={4}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             NO
                                         </TableHead>
                                         <TableHead
                                             rowSpan={4}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             LOKASI
                                         </TableHead>
                                         <TableHead
                                             rowSpan={4}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>PANJANG JALAN</span>
@@ -242,19 +242,19 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
 
                                         <TableHead
                                             colSpan={5}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             LAMPU PENERANGAN (UNIT)
                                         </TableHead>
                                         <TableHead
                                             colSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             KABEL JARINGAN LPJU (METER)
                                         </TableHead>
                                         <TableHead
                                             colSpan={5}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             ALAT PEMBATAS DAN PENGUKUR (APP) / KWH METER PLN (UNIT)
                                         </TableHead>
@@ -262,7 +262,7 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                                     <TableRow>
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>YANG</span>
@@ -271,13 +271,13 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                                         </TableHead>
                                         <TableHead
                                             colSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             TERPASANG
                                         </TableHead>
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>BELUM</span>
@@ -287,7 +287,7 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
 
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>YANG</span>
@@ -296,13 +296,13 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                                         </TableHead>
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             TERPASANG
                                         </TableHead>
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>BELUM</span>
@@ -312,7 +312,7 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
 
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>YANG</span>
@@ -321,13 +321,13 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                                         </TableHead>
                                         <TableHead
                                             colSpan={2}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             TERPASANG
                                         </TableHead>
                                         <TableHead
                                             rowSpan={3}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>BELUM</span>
@@ -338,13 +338,13 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
                                     <TableRow>
                                         <TableHead
                                             colSpan={2}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             LISTRIK PLN
                                         </TableHead>
                                         <TableHead
                                             rowSpan={2}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             <div className="flex flex-col leading-tight">
                                                 <span>TENAGA SURYA</span>
@@ -354,22 +354,22 @@ export default function ShowKecamatan({ subdistrict, subdistricts, totals, villa
 
                                         <TableHead
                                             rowSpan={2}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             PRA BAYAR
                                         </TableHead>
                                         <TableHead
                                             rowSpan={2}
-                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white"
+                                            className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground"
                                         >
                                             PASCA BAYAR
                                         </TableHead>
                                     </TableRow>
                                     <TableRow>
-                                        <TableHead className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white">
+                                        <TableHead className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground">
                                             NON APP
                                         </TableHead>
-                                        <TableHead className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-white">
+                                        <TableHead className="odd:bg-primary even:bg-primary hover:bg-primary border border-gray-300 px-2 py-1 text-center text-foreground">
                                             VIA APP
                                         </TableHead>
                                     </TableRow>

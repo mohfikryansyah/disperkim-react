@@ -1,16 +1,9 @@
 'use client';
 
 import MapPersebaranInfrastruktur from '@/pages/sidebar/lokasi/map-persebaran-infrastruktur';
-import { BreadcrumbItem, Lamp, NetworkCable, Panel, Street, Subdistrict, Village } from '@/types';
+import { Lamp, NetworkCable, Panel, Street, Subdistrict, Village } from '@/types';
 import { motion } from 'motion/react';
 import { useRef } from 'react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-];
 
 interface TitikLokasiPJUProps {
     lamps: Lamp[];
@@ -30,43 +23,39 @@ export default function TitikLokasiPJU({ lamps, panels, networkCables, subdistri
     const mapRef = useRef<L.Map | null>(null);
 
     return (
-        <section id="titik-lokasi-pju" className="relative min-h-screen w-full overflow-hidden px-4 py-10 md:px-0 md:py-16">
-            <motion.div
-                className="absolute inset-0 -z-10 opacity-25"
-                style={{
-                    background: 'radial-gradient(circle at 50% 0%, rgba(24,127,128,0.15) 0%, transparent 70%)',
-                }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: false }}
-            />
+        <section id="titik-lokasi-pju" className="relative w-full overflow-hidden bg-background px-4 py-20 md:px-6 lg:py-28">
+            {/* Top separator */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
 
-            <div className="group mx-auto mb-12 flex h-full w-full flex-1 flex-col rounded-xl p-4 text-center lg:max-w-screen-2xl">
+            <div className="mx-auto max-w-screen-2xl">
+                {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    className="mb-12 text-center"
+                    initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true, amount: 0.3 }}
                 >
-                    <h1 className="text-primary text-2xl font-bold sm:text-3xl md:text-4xl">Titik Lokasi LPJU Kota Gorontalo</h1>
-                    <p className="mx-auto mt-3 max-w-2xl font-medium text-gray-700">
-                        Menampilkan persebaran titik lokasi Lampu Penerangan Jalan Umum (LPJU) di wilayah Kota Gorontalo untuk memudahkan pemantauan
-                        dan pengelolaan.
+                    <p className="mb-3 text-xs font-semibold tracking-widest text-accent uppercase">Peta Interaktif</p>
+                    <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
+                        Titik Lokasi LPJU
+                    </h2>
+                    <p className="mx-auto mt-4 max-w-xl text-base text-[#5D7FA3]">
+                        Persebaran titik Lampu Penerangan Jalan Umum (LPJU) di seluruh wilayah Kota Gorontalo — klik titik untuk detail panel dan lampu.
                     </p>
-
-                    <motion.div
-                        className="bg-primary mx-auto mt-4 mb-8 h-1 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: 96 }}
-                        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-                        viewport={{ once: false }}
-                    />
+                    <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
                 </motion.div>
 
-                <div className="w-full">
+                {/* Map container */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="overflow-hidden rounded-2xl border border-white/[0.06] shadow-[0_0_60px_rgba(0,0,0,0.5)]"
+                >
                     <MapPersebaranInfrastruktur
-                        className="w-full not-lg:h-[30rem]"
+                        className="w-full not-lg:h-[32rem]"
                         lamps={lamps}
                         panels={panels}
                         networkCables={networkCables}
@@ -76,7 +65,7 @@ export default function TitikLokasiPJU({ lamps, panels, networkCables, subdistri
                         filters={filters}
                         mapRef={mapRef}
                     />
-                </div>
+                </motion.div>
             </div>
         </section>
     );

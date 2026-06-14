@@ -9,13 +9,6 @@ import toast from 'react-hot-toast';
 import APJForm from './components/form-apj';
 import { APJForm as APJFormType, CreateAPJProps, ENUMSumberDana } from './components/interface-apj';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'APJ',
-        href: route('subdistricts.index'),
-    },
-];
-
 export default function CreateAPJ({ streets, lamps, panels, titleForButton }: CreateAPJProps) {
     const { data, setData, post, processing, errors, reset, isDirty } = useForm<Required<APJFormType>>({
         street_id: '019ac4ac-7c16-71a2-9a35-92e39661dec2',

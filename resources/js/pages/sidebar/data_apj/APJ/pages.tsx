@@ -1,5 +1,4 @@
 import { DataTable } from '@/components/datatable/data-table';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { lampTypeCategories } from '@/helpers';
 import useBoolean from '@/hooks/use-boolean';
@@ -72,20 +71,31 @@ export default function IndexDataAPJ({ lamps, streets, subdistricts, panels }: P
                 <h1 className="text-primary text-lg font-semibold md:text-xl lg:text-2xl">Data Lampu Penerangan Jalan Umum</h1>
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {CardLamp.map((card, index) => (
-                        <Card key={index} className="bg-card-gradient text-white">
-                            <CardHeader>
-                                <CardTitle>{card.title}</CardTitle>
-                                <CardDescription className="text-gray-300">{card.description}</CardDescription>
+                        <Card
+                            key={index}
+                            className="group border-border bg-card hover:border-accent/50 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                        >
+                            <div className="bg-accent absolute top-0 left-0 h-1 w-full" />
+
+                            <div className="bg-accent/10 group-hover:bg-accent/20 absolute -top-8 -right-8 h-24 w-24 rounded-full blur-3xl transition-all duration-300" />
+
+                            <CardHeader className="relative z-10">
+                                <CardTitle className="text-foreground">{card.title}</CardTitle>
+
+                                <CardDescription>{card.description}</CardDescription>
                             </CardHeader>
-                            <CardContent>
-                                <h1 className="text-2xl font-bold">{card.value}</h1>
+
+                            <CardContent className="relative z-10">
+                                <div className="flex items-end justify-between">
+                                    <h1 className="text-primary text-3xl font-bold">{card.value}</h1>
+                                </div>
                             </CardContent>
                         </Card>
                     ))}
                 </div>
                 <div className="grid grid-cols-12">
                     <div className="col-span-12">
-                        <Card className="bg-gray-100">
+                        <Card>
                             <CardHeader>
                                 <CardTitle>Daftar Lampu Penerangan</CardTitle>
                                 <CardDescription>Berikut adalah data lampu penerangan yang tersedia.</CardDescription>

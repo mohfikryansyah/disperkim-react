@@ -1,0 +1,1 @@
+import{r}from"./app-Zc6u2tzM.js";import{g as f,h as m}from"./server.browser-Czz7r9gM.js";const M=({onCoordinatesChange:l,currentLocation:s})=>{const a=f();return r.useEffect(()=>{s&&a.setView([s.lat,s.lng])},[s,a]),m("click",e=>{const{lat:t,lng:p}=e.latlng;l({lat:t,lng:p})}),null};export{M};

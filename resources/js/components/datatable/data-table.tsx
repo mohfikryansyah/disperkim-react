@@ -57,13 +57,15 @@ export function DataTable<TData, TValue>({ columns, data, columnFilter, titleFil
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
-        getCoreRowModel: getCoreRowModel(),
+        onGlobalFilterChange: setGlobalFilter,
         getFilteredRowModel: getFilteredRowModel(),
+
+        getCoreRowModel: getCoreRowModel(),
+
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
-        onGlobalFilterChange: setGlobalFilter,
     });
 
     return (
@@ -75,10 +77,10 @@ export function DataTable<TData, TValue>({ columns, data, columnFilter, titleFil
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="bg-primary hover:bg-primary">
+                            <TableRow key={headerGroup.id} className="bg-primary hover:bg-primary/80">
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} colSpan={header.colSpan} className="text-white">
+                                        <TableHead key={header.id} colSpan={header.colSpan} className="text-primary-foreground">
                                             {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                                         </TableHead>
                                     );
@@ -92,7 +94,7 @@ export function DataTable<TData, TValue>({ columns, data, columnFilter, titleFil
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && 'selected'}
-                                    className="hover:bg-yellow-50 dark:hover:bg-slate-800/50 odd:bg-white even:bg-slate-50"
+                                    className="hover:bg-yellow-50 dark:hover:bg-slate-800"
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
